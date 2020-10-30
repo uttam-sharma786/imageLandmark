@@ -1,0 +1,160 @@
+.NotificationWrapper {
+    z-index: $zIndexNotifications;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.Notification {
+    display: block;
+
+    min-width: 256px;
+    width: auto;
+    max-width: 512px;
+    margin: .4em auto;
+    padding: 1em;
+
+    animation-name: notification-open;
+    animation-duration: 1s;
+    text-align: center;
+    pointer-events: auto;
+
+    opacity: .95;
+    color: white;
+    border-radius: 2px;
+
+    font-size: large;
+
+    > p {
+        margin: 1em 0;
+    }
+
+    a {
+      color: white;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    cursor: pointer;
+}
+
+.Notification--Permanent {
+    cursor: default;
+}
+
+.Notification__Action {
+  @extend %transitionAll;
+  padding: 0 1em;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 3px;
+  background: white(.5);
+  cursor: pointer;
+
+  &:hover {
+    background: white(.25);
+  }
+}
+
+.Notification--Closing {
+    animation-name: notification-close;
+    animation-duration: 1s;
+
+    opacity: 0;
+}
+
+.Notification--Warning {
+    background-color: $colorOrange;
+}
+
+.Notification--Success {
+    background-color: $colorGreen;
+}
+
+.Notification--Error {
+   background-color: $colorRed;
+}
+
+@keyframes notification-open {
+    0% { opacity: 0; }
+    100% { opacity: .95; }
+}
+
+@keyframes notification-close {
+    0% { opacity: 0.95; }
+    100% { opacity: 0; }
+}
+
+.TopBar {
+    @extend %transitionAll;
+    pointer-events: auto;
+    min-height: 38px;
+    line-height: 38px;
+    background-color: $colorRed;
+    color: white;
+    text-align: center;
+    padding: 0 1%;
+    width: 100%;
+
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+
+    cursor: pointer;
+
+    z-index: $zIndexNotifications;
+
+    &.Display {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &.Info {
+        background-color: $colorBlue;
+    }
+}
+
+.CornerSpinner {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 128px;
+    height: 128px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease-in-out, visibility .25s ease-in-out;
+    pointer-events: none;
+    z-index: $zIndexNotifications;
+
+    &.Display {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &::after {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: block;
+        border: 5px solid;
+        border-color: $colorDarkerBlue;
+        border-radius: 50%;
+        content: '';
+        width: 40px;
+        height: 40px;
+        border-top-color: transparent;
+        animation: rotation 1.5s linear infinite;
+    }
+
+}
+
+@keyframes rotation {
+	0% 		{ transform: rotate(0deg); }
+	50% 	{ transform: rotate(180deg); }
+	100% 	{ transform: rotate(360deg); }
+}
